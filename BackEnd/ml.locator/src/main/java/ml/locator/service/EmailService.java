@@ -21,10 +21,5 @@ public class EmailService {
 		
 	}
 	
-	@RequestMapping(value="test", method=RequestMethod.GET)
-    public User test(@RequestParam String test){
-		return user;
-	}
-	
 
 }
