@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/lang 
+		http://www.springframework.org/schema/lang/spring-lang-4.2.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/jee 
+		http://www.springframework.org/schema/jee/spring-jee-4.2.xsd">
+
+	<context:component-scan base-package="ml.locator.*" />
+
+
+	<!-- <jee:jndi-lookup expected-type="javax.sql.DataSource" id="springBeanIdForMySQLDS" 
+		jndi-name="MySQLDS"/> -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+		<property name="jndiName" value="java:jboss/datasources/MySQLDS"/> </bean> -->
+
+	<jee:jndi-lookup id="dataSource" jndi-name="java:jboss/datasources/MySQLDS"
+		expose-access-context="false" />
+	<!-- Spring will inject this container managed persistence unit anywhere 
+		you use @PersistenceContext. -->
+	<jee:jndi-lookup id="entityManagerFactory"
+		jndi-name="java:/BeaconPersistenceUnitFactory" expected-type="javax.persistence.EntityManagerFactory" />
+	<context:annotation-config
+		transaction-manager="transactionManager" />
+
+
+	<import resource="security.xml" />
+
+	<bean id="failureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<constructor-arg value="/index.html?login=fail" />
+	</bean>
+
+	<bean id="successHandler" class="ml.locator.security.AuthenticationSuccessHandlerImpl">
+	</bean>
+
+	<bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<constructor-arg name="strength" value="11" />
+	</bean>
+
+
+</beans>
