@@ -1,0 +1,38 @@
+<form name="registration" action="registration()">
+	<p>Username:<br> 
+		<input type="text" name="username" ng-model="username"required> 
+		<span style="color: red" ng-show="registration.user.$dirty && registration.user.$invalid"> 
+			<span ng-show="registration.user.$error.required">Username is required.</span>
+		</span>
+		
+	</p>
+	
+	<p>Email:<br>
+  		<input type="email" name="email" ng-model="email" required>
+  		<span style="color:red" ng-show="registration.email.$dirty && registration.email.$invalid">
+  		<span ng-show="registration.email.$error.required">Email is required.</span>
+  		<span ng-show="registration.email.$error.email">Invalid email address.</span>
+  		</span>
+	</p>
+
+	<p>Password:<br> 
+		<input type="password" name="password" ng-model="password" required> 
+		<span style="color: red" ng-show="registration.password.$dirty && registration.password.$invalid"> 
+			<span ng-show="registration.password.$error.required">Password is required.</span> 
+		</span>
+	</p>
+	
+	<p>Repeat password:<br> 
+		<input type="password" name="repeatPassword" ng-model="repeatPassword" required> 
+		<span style="color: red" ng-show="authorization.repeatPassword.$dirty && authorization.repeatPassword.$invalid"> 
+			<span ng-show="authorization.repeatPassword.$error.required">Password is required.</span> 
+		</span>
+	</p>
+
+	<p>
+		<input class="btn btn-default" type="submit" value="Submit" ng-disabled="authorization.username.$dirty && authorization.username.$invalid || authorization.password.$dirty && authorization.password.$invalid">
+	</p>
+
+	
+
+</form>

@@ -1,0 +1,19 @@
+<form name="subscribtion" action="subscribe()">
+	<div class="input-group">
+  		<span class="input-group-addon" id="sizing-addon2">@</span>
+  		<input 	ng-model="subscribeEmail" type="text" 
+  				class="form-control" placeholder="Username" 
+  				aria-describedby="sizing-addon2">
+  		<span style="color:red" ng-show="subscribtion.email.$dirty && subscribtion.email.$invalid">
+  		<span ng-show="subscribtion.email.$error.required">Email is required.</span>
+  		<span ng-show="subscribtion.email.$error.email">Invalid email address.</span>
+  		</span>
+	</div>
+	
+	<div>
+		<br/>
+		<input class="btn btn-default" type="submit" value="Submit" ng-disabled="subscribtion.username.$dirty && subscribtion.username.$invalid || subscribtion.password.$dirty && subscribtion.password.$invalid">
+	</div>
+	
+	
+</form>

@@ -1,0 +1,24 @@
+<form name="authorization" action="j_spring_security_check"
+	method="POST">
+	<p>Username:<br> 
+		<input type="text" name="username" ng-model="username"required> 
+		<span style="color: red" ng-show="autherization.user.$dirty && authorization.user.$invalid"> 
+			<span ng-show="authorization.user.$error.required">Username is required.</span>
+		</span>
+		
+	</p>
+
+	<p>Password:<br> 
+		<input type="password" name="password" ng-model="password" required> 
+		<span style="color: red" ng-show="authorization.password.$dirty && authorization.password.$invalid"> 
+			<span ng-show="authorization.password.$error.required">Password is required.</span> 
+		</span>
+	</p>
+
+	<p>
+		<input class="btn btn-default" type="submit" value="Submit"ng-disabled="authorization.username.$dirty && authorization.username.$invalid || authorization.password.$dirty && authorization.password.$invalid">
+	</p>
+
+	
+
+</form>

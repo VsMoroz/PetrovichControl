@@ -11,7 +11,7 @@
 
 	<http auto-config="true" entry-point-ref="authenticationEntryPoint">
 	 	<intercept-url pattern="/process/index.html" access="hasRole('IS_AUTHENTICATED_ANONYMOUSLY')" />
-        <intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/api/**" access="hasRole('ROLE_USER')" />
         
         <access-denied-handler error-page="/403.html" />
         
