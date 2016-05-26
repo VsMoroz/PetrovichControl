@@ -45,6 +45,8 @@
 
 	<bean id="successHandler" class="ml.locator.security.AuthenticationSuccessHandlerImpl">
 	</bean>
+	
+	<bean class="ml.locator.security.CsrfHeaderFilter"/>
 
 	<bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

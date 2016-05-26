@@ -8,7 +8,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
-<script src="resources/js/ibeacon-app.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
@@ -24,7 +23,13 @@
 </head>
 <body ng-app="ibeaconApp">
 	<div id="header" ng-include="'pages/fragments/header.html'"></div>
-	<div ng-view id="content"></div>
+	<div id="content">
+		<div ng-view ></div>
+	</div>
+	
+	<script type="text/javascript" src="resources/js/ibeacon-app.js"></script>
+	<script type="text/javascript" src="resources/js/controllers.js"></script>
+	<script type="text/javascript" src=resources/js/services.js></script>
 		
 </body>
 </html>

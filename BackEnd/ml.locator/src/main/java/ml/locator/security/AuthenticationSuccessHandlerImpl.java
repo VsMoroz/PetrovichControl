@@ -58,9 +58,9 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		}
 
 		if (isUser) {
-			return "/process/home";
+			return "/#/home";
 		} else if (isAdmin) {
-			return "/process/console";
+			return "/console";
 		} else {
 			throw new IllegalStateException();
 		}

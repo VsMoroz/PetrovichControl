@@ -2,6 +2,7 @@ var app = angular.module("ibeaconApp", ["ngRoute"]);
 
 app.run(function($rootScope){ 
 	$rootScope.username = "Login";
+	$rootScope.email = "";
 	$rootScope.isLogged = false;
 });
 
@@ -21,18 +22,3 @@ app.config(function($routeProvider){
 });
 
 
-app.controller('headerController', function($scope) {
-
-});
-
-app.controller('loginController', function($scope){
-	
-});
-
-app.controller('registrationController', function($scope){
-	
-});
-
-app.controller('homeController', function($scope){
-	
-});
