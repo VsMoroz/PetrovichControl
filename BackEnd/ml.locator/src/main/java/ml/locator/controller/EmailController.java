@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ml.locator.mail.EMailMessage;
 import ml.locator.mail.EMailSender;
 import ml.locator.mail.GmailSender;
+import ml.locator.mail.MailGunSender;
 
 @RestController
 @RequestMapping("mail")
@@ -26,7 +27,7 @@ public class EmailController {
 			messageToSend.getRecipientAddresses().add(address);
 			
 			EMailSender sender = new EMailSender();
-			sender.setSender(new GmailSender());
+			sender.setSender(new MailGunSender());
 			messageToSend = sender.sendEMail(messageToSend);
 			
 		return messageToSend;
