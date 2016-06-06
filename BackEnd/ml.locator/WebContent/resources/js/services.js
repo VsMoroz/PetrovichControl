@@ -1,6 +1,34 @@
-app.service("principalInfo", function($http){
+app.service('userRegistartion', function(){
+//	return({
+//		register: register
+//	});
+//	
+//	function register($rootScope, $http){
+//		var request = $http({
+//			method	: "POST",
+//			url		: "api/user/register",
+//			data	: {
+//				user		: $rootScope.registeringUser,
+//				userRoles	: $rootScope.userRoles
+//			}
+//				
+//		}).then(
+//				function successCallback(response){
+//					console.log($rootScope.registeringUser);
+//					window.alert("Success!!")
+//			
+//				}, 
+//				function errorCallback(response){
+//					window.alert("Failed!!")
+//				}
+//		);
+//	};
+});
+
+app.service('userService', function($rootScope, $http){
 	return ({
-		getPrincipalInfo	:getPrincipalInfo
+		getPrincipalInfo	: getPrincipalInfo,
+		register			: register
 	});
 	
 	function getPrincipalInfo($http){
@@ -27,5 +55,27 @@ app.service("principalInfo", function($http){
 					}
 			);
 	};
+	
+	function register($rootScope, $http){
+		var request = $http({
+			method	: "POST",
+			url		: "api/user/register",
+			data	: {
+				user		: $rootScope.registeringUser,
+				userRoles	: $rootScope.userRoles
+			}
+				
+		}).then(
+				function successCallback(response){
+					console.log($rootScope.registeringUser);
+					window.alert("Success!!")
+			
+				}, 
+				function errorCallback(response){
+					window.alert("Failed!!")
+				}
+		);
+	};
 	 
 });
+

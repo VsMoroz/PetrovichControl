@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans" 
+<beans xmlns= "http://www.springframework.org/schema/beans"
+	xmlns:security= "http://www.springframework.org/schema/security"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation=
 		"http://www.springframework.org/schema/beans 
@@ -8,59 +8,52 @@
 		http://www.springframework.org/schema/security 
 		http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-
-	<http auto-config="true" entry-point-ref="authenticationEntryPoint">
-	 	<intercept-url pattern="/process/index.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <intercept-url pattern="/api/**" access="ROLE_USER" />
-       
-      
+   
+	<security:http auto-config="true" entry-point-ref="authenticationEntryPoint">
+        <security:intercept-url pattern="/api/user/register" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/api/**" access="ROLE_USER" />
+  
+        <security:access-denied-handler error-page="/errors/403.html" />
         
-        <access-denied-handler error-page="/errors/403.html" />
-        
-        <form-login
+        <security:form-login
 				authentication-success-handler-ref="successHandler"
 				authentication-failure-handler-ref="failureHandler"
 				login-processing-url="/j_spring_security_check"/>
-		<remember-me
-                user-service-ref="userDAOImpl"
+		<security:remember-me
+                user-service-ref="userDAO"
 				data-source-ref="dataSource"
                 />
-		<logout
+		<security:logout
 				invalidate-session="true"
 				delete-cookies="JSESSIONID"
 				logout-success-url="/index.html"/>
-        
-        <!-- <form-login 
-		    login-page="/login" 
-		    default-target-url="/index" 
-		    login-processing-url="/j_spring_security_check"
-			authentication-failure-url="/login?error" 
-			username-parameter="username"
-			password-parameter="password" />
-		<logout logout-success-url="/login?logout"  />  -->
-		 
-		<!-- enable csrf protection -->
-		<!--   <csrf/> -->
 		
-       
-        
-        <logout/>
-	</http>
+		  <!--  <security:csrf/>  -->
+               
+        <security:logout/>
+	</security:http>
+	  
 	 
+	<security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider user-service-ref="userDAO">
+              <security:password-encoder ref="encoder"/> 
+        </security:authentication-provider>
+	</security:authentication-manager>
 	
-	<authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="userDAOImpl">
-              <password-encoder ref="encoder"/> 
-        </authentication-provider>
-	</authentication-manager>
-	<!-- 
-	 <authentication-manager>
-        <authentication-provider>
-            <user-service >
-                <user name="user" password="pass" authorities="ROLE_USER" />
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>
-    --> 
+	
+	<bean id="failureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<constructor-arg value="/index.html?login=fail" />
+	</bean>
 
-</beans:beans>
+	<bean id="successHandler" class="ml.locator.security.AuthenticationSuccessHandlerImpl">
+	</bean>
+	
+	<bean class="ml.locator.security.CsrfHeaderFilter"/>
+
+	<bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<constructor-arg name="strength" value="11" />
+	</bean>
+     
+</beans>

@@ -28,7 +28,8 @@
 	<label for="registrationRepeatPassword">Repeat password</label>
 		<input id="registrationRepeatPassword" class="form-control" type="password" name="repeatPassword" ng-model="repeatPassword" required> 
 		<span style="color: red" ng-show="registration.repeatPassword.$dirty && registration.repeatPassword.$invalid"> 
-			<span ng-show="registration.repeatPassword.$error.required">Password is required.</span> 
+			<span ng-show="registration.repeatPassword.$error.required">Password is required.</span>
+			<span ng-show="registration.repeatPassword">Password is required.</span> 
 		</span>
 	<br/>
 

@@ -1,5 +1,7 @@
 package ml.locator.model;
 
+import ml.locator.model.entity.User;
+
 public class UserDTO {
 	private String username;
 	private String email;
@@ -10,6 +12,11 @@ public class UserDTO {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+	}
+	public UserDTO(User user){
+		this.username = user.getUsername();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
 	}
 	
 	public String getUsername() {

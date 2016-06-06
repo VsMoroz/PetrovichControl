@@ -19,6 +19,11 @@ app.config(function($routeProvider){
 		templateUrl:'pages/views/home.html',
 		controller:'homeController'
 	});
+	
+	//disable # hash tag 
+	//if(window.history && window.history.pushState){
+	 //   $locationProvider.html5Mode(true);
+	  //}
 });
 
 

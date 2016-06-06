@@ -2,6 +2,7 @@ package ml.locator.model.service.user;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -9,13 +10,11 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import ml.locator.model.entity.User;
 import ml.locator.model.service.JpaDAO;
 
-@Repository
+@Stateless
 public class UserDAOImpl extends JpaDAO<User,String>  implements UserDAO<User, String> {
 	
 	public UserDAOImpl() {
@@ -33,7 +32,6 @@ public class UserDAOImpl extends JpaDAO<User,String>  implements UserDAO<User, S
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User findByName(String name)
     {
         final CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
@@ -53,5 +51,12 @@ public class UserDAOImpl extends JpaDAO<User,String>  implements UserDAO<User, S
         return users.iterator().next();
     	
     }
+    
+	@Override
+	public User find(String id) {
+		return findByName(id);
+	}
+    
+    
 
 }
