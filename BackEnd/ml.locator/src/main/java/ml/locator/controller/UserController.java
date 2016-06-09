@@ -107,7 +107,7 @@ public class UserController {
 	}
 	
 	private void sendConfirmationRequect(User user){
-		RegisterLink link = new RegisterLinkGenerator("http://localhost:8080/process/api/user/confirm", user.getEmail()).generateLink();
+		RegisterLink link = new RegisterLinkGenerator(getLocalHost(), user.getEmail()).generateLink();
 		preRegisterCache.put(user.getUsername(), link);
 		
 		String message = "Confirm registartion: " + link.toString();
@@ -119,6 +119,21 @@ public class UserController {
 		EMailSender sender = new EMailSender();
 		sender.setSender(new MailGunSender());
 		messageToSend = sender.sendEMail(messageToSend);
+	}
+	
+	private String getLocalHost(){
+		final String OPENSHIFT_GEAR_NAME = System.getenv("OPENSHIFT_GEAR_NAME");
+		if (OPENSHIFT_GEAR_NAME == null){
+			return "http://localhost:8080/process/api/user/confirm";
+		} 
+		if (OPENSHIFT_GEAR_NAME.equals("ibeacon")){
+			return "http://locator.ml/process/api/user/confirm";
+		} 
+		if (OPENSHIFT_GEAR_NAME.equals("test")){
+			return "http://test-ikcy.rhcloud.com/process/api/user/confirm";
+		} 
+		return null;
+		
 	}
 	
 	
