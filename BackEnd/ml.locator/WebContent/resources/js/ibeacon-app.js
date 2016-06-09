@@ -15,7 +15,7 @@ app.config(function($routeProvider){
 		templateUrl:'pages/views/registration.html',
 		controller:'registrationController'
 	});
-	$routeProvider.when('/home', {
+	$routeProvider.when('/', {
 		templateUrl:'pages/views/home.html',
 		controller:'homeController'
 	});

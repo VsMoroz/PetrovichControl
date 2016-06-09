@@ -8,12 +8,13 @@
 		http://www.springframework.org/schema/security 
 		http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-   
+
 	<security:http auto-config="true" entry-point-ref="authenticationEntryPoint">
-        <security:intercept-url pattern="/api/user/register" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-         <security:intercept-url pattern="/api/user/confirm" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+	 	<security:intercept-url pattern="/process/index.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <security:intercept-url pattern="/api/**" access="ROLE_USER" />
-  
+       
+      
+        
         <security:access-denied-handler error-page="/errors/403.html" />
         
         <security:form-login
@@ -21,22 +22,23 @@
 				authentication-failure-handler-ref="failureHandler"
 				login-processing-url="/j_spring_security_check"/>
 		<security:remember-me
-                user-service-ref="userDAO"
+                user-service-ref="userDAOImpl"
 				data-source-ref="dataSource"
                 />
 		<security:logout
 				invalidate-session="true"
 				delete-cookies="JSESSIONID"
 				logout-success-url="/index.html"/>
-		
-		  <!--  <security:csrf/>  -->
-               
+		 
+		<!-- enable csrf protection -->
+		<!--   <security:csrf/> -->
+        
         <security:logout/>
 	</security:http>
-	  
 	 
+	
 	<security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider user-service-ref="userDAO">
+        <security:authentication-provider user-service-ref="userDAOImpl">
               <security:password-encoder ref="encoder"/> 
         </security:authentication-provider>
 	</security:authentication-manager>
@@ -56,5 +58,5 @@
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 		<constructor-arg name="strength" value="11" />
 	</bean>
-     
+    
 </beans>

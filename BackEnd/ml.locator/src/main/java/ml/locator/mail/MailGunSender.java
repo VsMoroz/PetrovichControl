@@ -61,7 +61,7 @@ public class MailGunSender implements EMail{
 		}
 		
 		formData.add(MailAttribute.SUBJECT, "iBeacon notification");
-		formData.add(MailAttribute.TEXT, "test message");
+		formData.add(MailAttribute.TEXT, message.getMessage());
 		
 		return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, formData);
 	}
