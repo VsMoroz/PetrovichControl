@@ -43,8 +43,8 @@
 	
 	
 	<bean id="failureHandler"
-		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-		<constructor-arg value="/index.html?login=fail" />
+		class="ml.locator.security.CustomAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/index.html?login=fail" />
 	</bean>
 
 	<bean id="successHandler" class="ml.locator.security.AuthenticationSuccessHandlerImpl">

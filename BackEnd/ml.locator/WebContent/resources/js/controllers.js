@@ -19,7 +19,7 @@ app.controller('registrationController', function($scope, $http){
 		
 		var config = {
                 headers : {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }
 		$http.post('api/user/register', data, config)
