@@ -11,6 +11,13 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 import ml.locator.mail.EMailMessage;
 import ml.locator.mail.EMailSender;
 import ml.locator.mail.MailGunSender;
+import ml.locator.model.TokenDTO;
 import ml.locator.model.UserDTO;
 import ml.locator.model.entity.Role;
 import ml.locator.model.entity.User;
 import ml.locator.model.service.role.RoleDAO;
 import ml.locator.model.service.user.UserDAO;
+import ml.locator.security.TokenUtils;
 import ml.locator.utils.CryptCodeGenerator;
 import ml.locator.utils.PrincipalInformation;
 import ml.locator.utils.registration.PreRegisterCache;
@@ -33,6 +42,13 @@ import ml.locator.utils.registration.RegisterLinkGenerator;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+	private static final String PARAM_USERNAME = "username";
+	private static final String PARAM_PASSWORD = "password";
+	private static final String PARAM_EMAIL = "email";
+	 
+	@Autowired
+	@Qualifier("authenticationManager")
+	private AuthenticationManager authenticationManager;
 	
 	@Autowired
 	private PrincipalInformation principalInformation;
@@ -63,9 +79,9 @@ public class UserController {
 	
 	@RequestMapping(value="register", method=RequestMethod.POST)
 	public Response register(
-			@RequestParam("username") String username,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password,
+			@RequestParam(PARAM_USERNAME) String username,
+			@RequestParam(PARAM_EMAIL) String email,
+			@RequestParam(PARAM_PASSWORD) String password,
 			@RequestParam(value="userRoles[]") String[] userRoles ){
 		
 		User persistingUser = new User();
@@ -92,7 +108,7 @@ public class UserController {
 	
 	@RequestMapping(value = "confirm", method = RequestMethod.GET)
 	public Response confirm(
-			@RequestParam("email") String email,
+			@RequestParam(PARAM_EMAIL) String email,
 			@RequestParam("key") String key){
 		if(!preRegisterCache.isEmpty()){
 			String login = preRegisterCache.getLogin(key);
@@ -104,6 +120,17 @@ public class UserController {
 		}
 		
 		return Response.notModified().build();
+	}
+	
+	@RequestMapping(value="authenticate", method=RequestMethod.POST)
+	public TokenDTO authenticate(@RequestParam(PARAM_USERNAME) String username,
+			@RequestParam(PARAM_PASSWORD) String password){
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+		Authentication authentication = authenticationManager.authenticate(authenticationToken);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		UserDetails userDetails = userDAO.loadUserByUsername(username);
+		TokenDTO token = new TokenDTO(TokenUtils.createToken(userDetails));
+		return token;
 	}
 	
 	private void sendConfirmationRequect(User user){

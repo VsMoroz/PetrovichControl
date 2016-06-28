@@ -58,7 +58,7 @@
 	<bean
 			class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 			
-	<bean id="userDAOImpl" class="ml.locator.model.service.user.UserDAOImpl"/>
+	<bean id="userDAO" class="ml.locator.model.service.user.UserDAOImpl"/>
 	<bean id="roleDAO" class="ml.locator.model.service.role.RoleDAOImpl"/>
 			
 	<import resource="security.xml" />

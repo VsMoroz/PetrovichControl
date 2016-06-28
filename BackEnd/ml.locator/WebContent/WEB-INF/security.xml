@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/security 
 		http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
-   
+   <!-- 
 	<security:http auto-config="true" entry-point-ref="authenticationEntryPoint">
         <security:intercept-url pattern="/api/user/register" access="IS_AUTHENTICATED_ANONYMOUSLY" />
          <security:intercept-url pattern="/api/user/confirm" access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -29,10 +29,26 @@
 				delete-cookies="JSESSIONID"
 				logout-success-url="/index.html"/>
 		
-		  <!--  <security:csrf/>  -->
+		<security:csrf/>  
                
         <security:logout/>
-	</security:http>
+	</security:http> 
+	-->
+	<security:http
+                        realm="Protected API"
+                        use-expressions="true"
+                        auto-config="false"
+                        create-session="stateless"
+                        entry-point-ref="unauthorizedEntryPoint"
+                        authentication-manager-ref="authenticationManager"
+                        access-denied-page="/error.html">
+              	<security:custom-filter ref="authenticationTokenProcessingFilter" position="FORM_LOGIN_FILTER" />
+            	<security:intercept-url pattern="/process/api/user/register" access="permitAll" />
+            	<security:intercept-url pattern="/process/api/user/authenticate" access="permitAll" />
+                <security:intercept-url pattern="/process/api/**" access="hasRole('user')" />
+                
+        </security:http>
+	
 	  
 	 
 	<security:authentication-manager alias="authenticationManager">
@@ -47,10 +63,16 @@
 		<property name="defaultFailureUrl" value="/index.html?login=fail" />
 	</bean>
 
-	<bean id="successHandler" class="ml.locator.security.AuthenticationSuccessHandlerImpl">
+	<!-- <bean id="successHandler" class="ml.locator.security.AuthenticationSuccessHandlerImpl">
+	</bean>  -->
+	
+	<bean id="unauthorizedEntryPoint" class="ml.locator.security.AuthenticationEntryPointImpl"/>
+	
+	<bean id="authenticationTokenProcessingFilter" class="ml.locator.security.AuthenticationTokenProcessingFilter">
+		<constructor-arg ref="userDAO"></constructor-arg>
 	</bean>
 	
-	<bean class="ml.locator.security.CsrfHeaderFilter"/>
+	<!--  <bean class="ml.locator.security.CsrfHeaderFilter"/> -->
 
 	<bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

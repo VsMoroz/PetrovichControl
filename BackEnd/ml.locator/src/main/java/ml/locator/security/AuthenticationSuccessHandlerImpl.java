@@ -58,7 +58,7 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		}
 
 		if (isUser) {
-			return "/#/home";
+			return "/#/";
 		} else if (isAdmin) {
 			return "/console";
 		} else {

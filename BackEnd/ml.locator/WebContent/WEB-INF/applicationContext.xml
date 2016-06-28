@@ -23,5 +23,6 @@
 	<jee:jndi-lookup id="userDAO" jndi-name="java:global/process/UserDAOImpl!ml.locator.model.service.user.UserDAO" />
 
 	<import resource="security.xml" />
+	
 
 </beans>

@@ -1,11 +1,15 @@
 package ml.locator.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ml.locator.model.entity.User;
 
 public class UserDTO {
 	private String username;
 	private String email;
 	private String password;
+	private Map<String, Boolean> roles = new HashMap<String, Boolean>();
 
 	public UserDTO(){}
 	public UserDTO (String username, String email, String password){
@@ -13,10 +17,14 @@ public class UserDTO {
 		this.email = email;
 		this.password = password;
 	}
+	public UserDTO(String username, String email, String password, Map<String, Boolean> roles){
+		this(username, email, password);
+		this.roles = roles;
+	}
+	
 	public UserDTO(User user){
-		this.username = user.getUsername();
-		this.email = user.getEmail();
-		this.password = user.getPassword();
+		this(user.getUsername(), user.getEmail(), user.getPassword());
+		
 	}
 	
 	public String getUsername() {

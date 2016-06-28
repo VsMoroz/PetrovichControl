@@ -74,5 +74,8 @@ public class UserControllerTest {
 		assertTrue(response.getStatus() == 200);
 		
 	}
+	
+	
+	
 
 }
