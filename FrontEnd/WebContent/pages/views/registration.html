@@ -1,0 +1,45 @@
+<div class="container" >
+<form name="registration" >
+	<h3>Registration</h3>
+	
+	<label for="registrationUsername">Username</label> 
+		<input id="registrationUsername"class="form-control" type="text" name="username" ng-model="newUsername" required> 
+		<span style="color: red" ng-show="registration.username.$dirty && registration.username.$invalid"> 
+			<span ng-show="registration.username.$error.required">Username is required.</span>
+		</span>
+		<br/>
+	
+	
+	<label for="registrationEmail">Email</label>
+  		<input id="registrationEmail" class="form-control" type="email" name="email" ng-model="newEmail" required>
+  		<span style="color:red" ng-show="registration.email.$dirty && registration.email.$invalid">
+  			<span ng-show="registration.email.$error.required">Email is required.</span>
+  			<span ng-show="registration.email.$error.email">Invalid email address.</span>
+  		</span>
+  		<br/>
+
+	<label for="registrationPassword">Password</label>
+		<input id="registrationPassword" class="form-control" type="password" name="password" ng-model="newPassword" required> 
+		<span style="color: red" ng-show="registration.password.$dirty && registration.password.$invalid"> 
+			<span ng-show="registration.password.$error.required">Password is required.</span> 
+		</span>
+	<br/>
+	
+	<label for="registrationRepeatPassword">Repeat password</label>
+		<input id="registrationRepeatPassword" class="form-control" type="password" name="repeatPassword" ng-model="repeatPassword" required> 
+		<span style="color: red" ng-show="registration.repeatPassword.$dirty && registration.repeatPassword.$invalid"> 
+			<span ng-show="registration.repeatPassword.$error.required">Password is required.</span>
+			<span ng-show="registration.repeatPassword">Password is required.</span> 
+		</span>
+	<br/>
+
+	<p>
+		<input class="btn btn-default" type="submit" value="Register" ng-click="register(newUsername, newEmail, newPassword, repeatPassword)" ng-disabled="authorization.username.$dirty && authorization.username.$invalid || authorization.password.$dirty && authorization.password.$invalid">
+	</p>
+	
+	
+
+	
+
+</form>
+</div>

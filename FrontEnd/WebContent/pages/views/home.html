@@ -1,0 +1,18 @@
+<div class="container" >
+
+<form name="subscription">
+	<h3>Subscription</h3><br/>
+	<label for="subscriptionEmail">Email</label><br>
+  	<input id="subscriptionEmail" class="form-control" type="email" name="email" ng-model="subsriptionEmail" required>
+  	<span style="color:red" ng-show="subscription.email.$dirty && subscription.email.$invalid">
+  		<span ng-show="subscription.email.$error.required">Email is required.</span>
+  		<span ng-show="subscription.email.$error.email">Invalid email address.</span>
+  	</span>
+  	<br/>
+  		
+	<div>
+		<br/>
+		<input class="btn btn-default" type="submit" value="Subscribe" ng-click="subscribe(subsriptionEmail)" ng-disabled="subscription.email.$dirty && subscription.email.$invalid">
+	</div>	
+</form>
+</div>
